@@ -1,0 +1,104 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "IR-ASSIST IOC Registry",
+  "description": "Indicators of Compromise tracking",
+  "type": "object",
+  "required": ["incident_id", "indicators"],
+  "properties": {
+    "incident_id": {
+      "type": "string",
+      "pattern": "^INC-\\d{4}-\\d{4}$"
+    },
+    "indicators": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "type", "value", "added_at"],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Sequential IOC ID"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "ip_address",
+              "domain",
+              "url",
+              "email_address",
+              "email_subject",
+              "file_hash_md5",
+              "file_hash_sha1",
+              "file_hash_sha256",
+              "file_name",
+              "file_path",
+              "registry_key",
+              "process_name",
+              "service_name",
+              "scheduled_task",
+              "user_account",
+              "user_agent",
+              "certificate",
+              "mutex",
+              "pipe_name",
+              "other"
+            ],
+            "description": "Type of indicator"
+          },
+          "value": {
+            "type": "string",
+            "description": "The indicator value"
+          },
+          "context": {
+            "type": "string",
+            "description": "How/where this IOC was observed"
+          },
+          "confidence": {
+            "type": "string",
+            "enum": ["high", "medium", "low"],
+            "description": "Confidence level in this indicator"
+          },
+          "malicious": {
+            "type": "string",
+            "enum": ["confirmed", "suspected", "benign", "unknown"],
+            "description": "Determination of maliciousness"
+          },
+          "added_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When the IOC was added"
+          },
+          "source": {
+            "type": "string",
+            "description": "Source of the IOC (tool, analyst, threat intel)"
+          },
+          "related_systems": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Systems where this IOC was found"
+          },
+          "mitre_technique": {
+            "type": "string",
+            "description": "Associated MITRE ATT&CK technique"
+          },
+          "actions_taken": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "action": { "type": "string" },
+                "timestamp": { "type": "string", "format": "date-time" },
+                "by": { "type": "string" }
+              }
+            },
+            "description": "Actions taken based on this IOC"
+          },
+          "notes": {
+            "type": "string",
+            "description": "Additional notes"
+          }
+        }
+      }
+    }
+  }
+}
