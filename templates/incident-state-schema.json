@@ -1,0 +1,181 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "IR-ASSIST Incident State",
+  "description": "Master state file for tracking incident progress",
+  "type": "object",
+  "required": ["incident_id", "title", "created", "status", "current_phase"],
+  "properties": {
+    "incident_id": {
+      "type": "string",
+      "pattern": "^INC-\\d{4}-\\d{4}$",
+      "description": "Unique incident identifier (INC-YYYY-NNNN)"
+    },
+    "title": {
+      "type": "string",
+      "description": "Brief descriptive title"
+    },
+    "created": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Incident creation timestamp (UTC)"
+    },
+    "last_updated": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Last modification timestamp (UTC)"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["active", "contained", "resolved", "closed"],
+      "description": "Overall incident status"
+    },
+    "priority": {
+      "type": "string",
+      "enum": ["CRITICAL", "HIGH", "MEDIUM", "LOW"],
+      "description": "Incident priority level"
+    },
+    "category": {
+      "type": "string",
+      "description": "Incident category (CAT-1 through CAT-8)"
+    },
+    "current_phase": {
+      "type": "string",
+      "enum": ["IDENTIFICATION", "TRIAGE", "INVESTIGATION", "CONTAINMENT", "ERADICATION", "RECOVERY", "POST_INCIDENT"],
+      "description": "Current IR lifecycle phase"
+    },
+    "phase_history": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "phase": { "type": "string" },
+          "entered": { "type": "string", "format": "date-time" },
+          "exited": { "type": ["string", "null"], "format": "date-time" }
+        }
+      },
+      "description": "History of phase transitions"
+    },
+    "checklist_progress": {
+      "type": "object",
+      "properties": {
+        "identification": {
+          "type": "object",
+          "properties": {
+            "completed": { "type": "integer" },
+            "total": { "type": "integer" },
+            "items": { "type": "array", "items": { "type": "object" } }
+          }
+        },
+        "triage": {
+          "type": "object",
+          "properties": {
+            "completed": { "type": "integer" },
+            "total": { "type": "integer" },
+            "items": { "type": "array", "items": { "type": "object" } }
+          }
+        },
+        "investigation": {
+          "type": "object",
+          "properties": {
+            "completed": { "type": "integer" },
+            "total": { "type": "integer" },
+            "items": { "type": "array", "items": { "type": "object" } }
+          }
+        },
+        "containment": {
+          "type": "object",
+          "properties": {
+            "completed": { "type": "integer" },
+            "total": { "type": "integer" },
+            "items": { "type": "array", "items": { "type": "object" } }
+          }
+        },
+        "eradication": {
+          "type": "object",
+          "properties": {
+            "completed": { "type": "integer" },
+            "total": { "type": "integer" },
+            "items": { "type": "array", "items": { "type": "object" } }
+          }
+        },
+        "recovery": {
+          "type": "object",
+          "properties": {
+            "completed": { "type": "integer" },
+            "total": { "type": "integer" },
+            "items": { "type": "array", "items": { "type": "object" } }
+          }
+        },
+        "post_incident": {
+          "type": "object",
+          "properties": {
+            "completed": { "type": "integer" },
+            "total": { "type": "integer" },
+            "items": { "type": "array", "items": { "type": "object" } }
+          }
+        }
+      },
+      "description": "Progress tracking for each phase checklist"
+    },
+    "scope": {
+      "type": "object",
+      "properties": {
+        "affected_systems": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "List of affected system hostnames/IPs"
+        },
+        "affected_accounts": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "List of compromised user/service accounts"
+        },
+        "affected_networks": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "List of affected network segments"
+        },
+        "affected_data": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Types of data potentially affected"
+        }
+      },
+      "description": "Current scope of the incident"
+    },
+    "initial_vector": {
+      "type": "string",
+      "description": "How the attacker gained initial access"
+    },
+    "attack_chain": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "phase": { "type": "string" },
+          "technique": { "type": "string" },
+          "evidence": { "type": "string" },
+          "timestamp": { "type": "string", "format": "date-time" }
+        }
+      },
+      "description": "Mapped attack chain phases"
+    },
+    "incident_commander": {
+      "type": "string",
+      "description": "Assigned incident commander"
+    },
+    "assigned_analysts": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Analysts assigned to the incident"
+    },
+    "last_sitrep": {
+      "type": "string",
+      "description": "Path to most recent situation report"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Path to freeform notes file"
+    }
+  }
+}
