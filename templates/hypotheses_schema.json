@@ -1,0 +1,116 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "IR-ASSIST Hypothesis Tracker",
+  "description": "Track and evaluate competing hypotheses during investigation",
+  "type": "object",
+  "required": ["incident_id", "hypotheses"],
+  "properties": {
+    "incident_id": {
+      "type": "string",
+      "pattern": "^INC-\\d{4}-\\d{4}$"
+    },
+    "current_working_hypothesis": {
+      "type": "integer",
+      "description": "ID of the current leading hypothesis"
+    },
+    "hypotheses": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "description", "status", "created_at"],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Sequential hypothesis ID"
+          },
+          "description": {
+            "type": "string",
+            "description": "The hypothesis statement"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["investigating", "confirmed", "refuted", "inconclusive", "superseded"],
+            "description": "Current status of the hypothesis"
+          },
+          "confidence": {
+            "type": "string",
+            "enum": ["high", "medium", "low"],
+            "description": "Confidence level"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When the hypothesis was created"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When the hypothesis was last updated"
+          },
+          "supporting_evidence": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "description": { "type": "string" },
+                "source": { "type": "string" },
+                "timestamp": { "type": "string", "format": "date-time" },
+                "weight": { "type": "string", "enum": ["strong", "moderate", "weak"] }
+              }
+            },
+            "description": "Evidence supporting this hypothesis"
+          },
+          "contradicting_evidence": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "description": { "type": "string" },
+                "source": { "type": "string" },
+                "timestamp": { "type": "string", "format": "date-time" },
+                "weight": { "type": "string", "enum": ["strong", "moderate", "weak"] }
+              }
+            },
+            "description": "Evidence contradicting this hypothesis"
+          },
+          "evidence_needed": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "What evidence would confirm or refute this hypothesis"
+          },
+          "assumptions": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Assumptions underlying this hypothesis"
+          },
+          "implications_if_true": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "What it means if this hypothesis is correct"
+          },
+          "superseded_by": {
+            "type": "integer",
+            "description": "ID of hypothesis that replaced this one"
+          },
+          "notes": {
+            "type": "string",
+            "description": "Additional notes"
+          }
+        }
+      }
+    },
+    "evolution_log": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "timestamp": { "type": "string", "format": "date-time" },
+          "from_hypothesis": { "type": "integer" },
+          "to_hypothesis": { "type": "integer" },
+          "reason": { "type": "string" }
+        }
+      },
+      "description": "Log of how the working hypothesis has evolved"
+    }
+  }
+}
