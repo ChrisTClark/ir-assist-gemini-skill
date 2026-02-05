@@ -1,0 +1,97 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "IR-ASSIST Task Tracker",
+  "description": "Who/What/When task management",
+  "type": "object",
+  "required": ["incident_id", "tasks"],
+  "properties": {
+    "incident_id": {
+      "type": "string",
+      "pattern": "^INC-\\d{4}-\\d{4}$"
+    },
+    "tasks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "what", "who", "when", "status", "created_at"],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Sequential task ID"
+          },
+          "what": {
+            "type": "string",
+            "description": "Task description - what needs to be done"
+          },
+          "who": {
+            "type": "string",
+            "description": "Person responsible for the task"
+          },
+          "when": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Due date/time (UTC)"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["pending", "in_progress", "completed", "blocked", "cancelled"],
+            "description": "Current task status"
+          },
+          "priority": {
+            "type": "string",
+            "enum": ["critical", "high", "medium", "low"],
+            "description": "Task priority"
+          },
+          "phase": {
+            "type": "string",
+            "description": "IR phase this task belongs to"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When the task was created"
+          },
+          "created_by": {
+            "type": "string",
+            "description": "Who created the task"
+          },
+          "completed_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When the task was completed"
+          },
+          "outcome": {
+            "type": "string",
+            "description": "Result/outcome of the task"
+          },
+          "blockers": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "What's blocking this task"
+          },
+          "dependencies": {
+            "type": "array",
+            "items": { "type": "integer" },
+            "description": "IDs of tasks this depends on"
+          },
+          "notes": {
+            "type": "string",
+            "description": "Additional notes"
+          }
+        }
+      }
+    },
+    "summary": {
+      "type": "object",
+      "properties": {
+        "total": { "type": "integer" },
+        "pending": { "type": "integer" },
+        "in_progress": { "type": "integer" },
+        "completed": { "type": "integer" },
+        "blocked": { "type": "integer" },
+        "overdue": { "type": "integer" }
+      },
+      "description": "Task summary statistics"
+    }
+  }
+}
