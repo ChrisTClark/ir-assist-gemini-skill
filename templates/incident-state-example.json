@@ -1,0 +1,153 @@
+{
+  "incident_id": "INC-2026-0001",
+  "title": "Cobalt Strike Beacon - Chicago Branch",
+  "created": "2026-02-05T09:20:00Z",
+  "last_updated": "2026-02-06T14:30:00Z",
+  "status": "active",
+  "priority": "HIGH",
+  "category": "CAT-3",
+  "current_phase": "INVESTIGATION",
+  "phase_history": [
+    {
+      "phase": "IDENTIFICATION",
+      "entered": "2026-02-05T09:20:00Z",
+      "exited": "2026-02-05T09:45:00Z"
+    },
+    {
+      "phase": "TRIAGE",
+      "entered": "2026-02-05T09:45:00Z",
+      "exited": "2026-02-05T10:30:00Z"
+    },
+    {
+      "phase": "INVESTIGATION",
+      "entered": "2026-02-05T10:30:00Z",
+      "exited": null
+    }
+  ],
+  "checklist_progress": {
+    "identification": {
+      "completed": 8,
+      "total": 8,
+      "items": [
+        {"id": "2.1.1", "description": "Record alert timestamp", "completed": true},
+        {"id": "2.1.2", "description": "Identify alert source", "completed": true},
+        {"id": "2.1.3", "description": "Capture raw alert data", "completed": true},
+        {"id": "2.2.1", "description": "Identify affected systems", "completed": true},
+        {"id": "2.2.2", "description": "Identify affected users", "completed": true},
+        {"id": "2.2.3", "description": "Capture initial indicators", "completed": true},
+        {"id": "2.2.4", "description": "Check for related alerts", "completed": true},
+        {"id": "2.3.1", "description": "Open incident ticket", "completed": true}
+      ]
+    },
+    "triage": {
+      "completed": 12,
+      "total": 12,
+      "items": [
+        {"id": "3.1.1", "description": "Verify not false positive", "completed": true},
+        {"id": "3.1.2", "description": "Correlate with threat intel", "completed": true},
+        {"id": "3.2.1", "description": "Assign category", "completed": true},
+        {"id": "3.2.2", "description": "Identify attack phase", "completed": true},
+        {"id": "3.3.1", "description": "Assess alert fidelity", "completed": true},
+        {"id": "3.3.2", "description": "Assess HVA status", "completed": true},
+        {"id": "3.3.3", "description": "Assess threat intel match", "completed": true},
+        {"id": "3.3.4", "description": "Determine overall priority", "completed": true},
+        {"id": "3.4.1", "description": "Make escalation decision", "completed": true},
+        {"id": "3.4.2", "description": "Notify Incident Commander", "completed": true},
+        {"id": "3.5.1", "description": "Assign lead investigator", "completed": true},
+        {"id": "3.5.2", "description": "Brief assigned personnel", "completed": true}
+      ]
+    },
+    "investigation": {
+      "completed": 14,
+      "total": 24,
+      "items": [
+        {"id": "4.1.1", "description": "Identify evidence sources", "completed": true},
+        {"id": "4.1.2", "description": "Preserve evidence integrity", "completed": true},
+        {"id": "4.1.3", "description": "Collect volatile evidence", "completed": true},
+        {"id": "4.2.1", "description": "Review SIEM logs", "completed": true},
+        {"id": "4.2.2", "description": "Review EDR telemetry", "completed": true},
+        {"id": "4.2.3", "description": "Review firewall logs", "completed": true},
+        {"id": "4.2.4", "description": "Review proxy logs", "completed": true},
+        {"id": "4.2.5", "description": "Review DNS logs", "completed": true},
+        {"id": "4.2.6", "description": "Review authentication logs", "completed": true},
+        {"id": "4.2.7", "description": "Review application logs", "completed": false},
+        {"id": "4.3.1", "description": "Map initial access", "completed": true},
+        {"id": "4.3.2", "description": "Map execution", "completed": true},
+        {"id": "4.3.3", "description": "Map persistence", "completed": true},
+        {"id": "4.3.4", "description": "Map privilege escalation", "completed": true},
+        {"id": "4.3.5", "description": "Map lateral movement", "completed": false},
+        {"id": "4.3.6", "description": "Map C2", "completed": false},
+        {"id": "4.4.1", "description": "Extract IP indicators", "completed": false},
+        {"id": "4.4.2", "description": "Extract domain indicators", "completed": false},
+        {"id": "4.4.3", "description": "Extract file indicators", "completed": false},
+        {"id": "4.5.1", "description": "Document affected systems", "completed": false},
+        {"id": "4.5.2", "description": "Document affected accounts", "completed": false},
+        {"id": "4.6.1", "description": "Build timeline", "completed": false},
+        {"id": "4.7.1", "description": "Identify initial vector", "completed": false},
+        {"id": "4.7.2", "description": "Identify enabling conditions", "completed": false}
+      ]
+    },
+    "containment": {"completed": 0, "total": 15, "items": []},
+    "eradication": {"completed": 0, "total": 12, "items": []},
+    "recovery": {"completed": 0, "total": 10, "items": []},
+    "post_incident": {"completed": 0, "total": 14, "items": []}
+  },
+  "scope": {
+    "affected_systems": [
+      "WKSTN-4521",
+      "SRV-FILE02",
+      "SRV-DC01"
+    ],
+    "affected_accounts": [
+      "jsmith",
+      "svc_backup"
+    ],
+    "affected_networks": [
+      "Chicago-Branch-VLAN-10"
+    ],
+    "affected_data": [
+      "Unknown - investigation ongoing"
+    ]
+  },
+  "initial_vector": "Suspected phishing - under investigation",
+  "attack_chain": [
+    {
+      "phase": "Initial Access",
+      "technique": "T1566.001 - Spearphishing Attachment",
+      "evidence": "Suspicious email with macro-enabled doc",
+      "timestamp": "2026-02-05T08:45:00Z"
+    },
+    {
+      "phase": "Execution",
+      "technique": "T1059.001 - PowerShell",
+      "evidence": "Encoded PowerShell execution in logs",
+      "timestamp": "2026-02-05T08:47:00Z"
+    },
+    {
+      "phase": "C2",
+      "technique": "T1071.001 - Web Protocols",
+      "evidence": "Cobalt Strike beacon traffic to 185.x.x.x",
+      "timestamp": "2026-02-05T08:48:00Z"
+    },
+    {
+      "phase": "Credential Access",
+      "technique": "T1003.001 - LSASS Memory",
+      "evidence": "CrowdStrike alert on credential dumping",
+      "timestamp": "2026-02-05T09:10:00Z"
+    },
+    {
+      "phase": "Lateral Movement",
+      "technique": "T1021.002 - SMB/Windows Admin Shares",
+      "evidence": "SMB connections to SRV-FILE02, SRV-DC01",
+      "timestamp": "2026-02-05T09:25:00Z"
+    }
+  ],
+  "incident_commander": "C. Clark",
+  "assigned_analysts": [
+    "John (Forensics)",
+    "Sarah (Network)",
+    "Mike (Endpoint)"
+  ],
+  "last_sitrep": "sitreps/sitrep-2026-02-06-0800.md",
+  "notes": "notes.md"
+}
