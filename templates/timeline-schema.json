@@ -1,0 +1,88 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "IR-ASSIST Timeline",
+  "description": "Chronological event log for incident",
+  "type": "object",
+  "required": ["incident_id", "entries"],
+  "properties": {
+    "incident_id": {
+      "type": "string",
+      "pattern": "^INC-\\d{4}-\\d{4}$"
+    },
+    "entries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "timestamp", "type", "description"],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Sequential entry ID"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When the event occurred (UTC)"
+          },
+          "recorded_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When this entry was recorded (UTC)"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "detection",
+              "alert",
+              "escalation",
+              "phase_change",
+              "finding",
+              "ioc_identified",
+              "hypothesis",
+              "action_taken",
+              "containment",
+              "eradication",
+              "recovery",
+              "communication",
+              "decision",
+              "task_assigned",
+              "task_completed",
+              "note"
+            ],
+            "description": "Type of timeline entry"
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of the event"
+          },
+          "source": {
+            "type": "string",
+            "description": "Source of the information (tool, person, log)"
+          },
+          "systems_involved": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Systems related to this entry"
+          },
+          "accounts_involved": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Accounts related to this entry"
+          },
+          "evidence_ref": {
+            "type": "string",
+            "description": "Reference to evidence file/location"
+          },
+          "mitre_technique": {
+            "type": "string",
+            "description": "MITRE ATT&CK technique ID if applicable"
+          },
+          "recorded_by": {
+            "type": "string",
+            "description": "Who recorded this entry"
+          }
+        }
+      }
+    }
+  }
+}
